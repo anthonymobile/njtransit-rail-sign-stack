@@ -28,7 +28,7 @@ def lambda_handler(event, context):
 
         Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
     """
-    logger.debug(f"HelloWorldFunction Event: {event}")
+    logger.debug(f"NJTransitRailSignFunction Event: {event}")
 
     try:
         ip = requests.get("http://checkip.amazonaws.com/")
@@ -46,7 +46,7 @@ def lambda_handler(event, context):
     return {
         "statusCode": 200,
         "body": json.dumps({
-            "message": "hello world",
+            "message": "NJTransit Sign Is Alive!",
             "location": ip.text.replace("\n", ""),
             "util_string": s
         }),

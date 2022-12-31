@@ -3,11 +3,10 @@ import os
 
 import aws_cdk as cdk
 
-from api_lambda_example_test.api_lambda_example_test_stack import ApiLambdaExampleTestStack
-
+from stacks.njtransit_rail_sign_stack import NJTransitRailSignService
 
 app = cdk.App()
-ApiLambdaExampleTestStack(app, "ApiLambdaExampleTestStack2",
+NJTransitRailSignService(app, "njtransit-rail-sign-stack",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.
