@@ -1,0 +1,6 @@
+flask
+flask-lambda
+bootstrap-flask
+jinja2
+requests
+Werkzeug==2.0.3

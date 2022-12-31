@@ -7,7 +7,7 @@ from api_lambda_example_test.api_lambda_example_test_stack import ApiLambdaExamp
 
 
 app = cdk.App()
-ApiLambdaExampleTestStack(app, "ApiLambdaExampleTestStack",
+ApiLambdaExampleTestStack(app, "ApiLambdaExampleTestStack2",
     # If you don't specify 'env', this stack will be environment-agnostic.
     # Account/Region-dependent features and context lookups will not work,
     # but a single synthesized template can be deployed anywhere.

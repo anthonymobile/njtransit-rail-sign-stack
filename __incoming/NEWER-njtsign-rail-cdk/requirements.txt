@@ -1,0 +1,8 @@
+aws-cdk-lib==2.58.1
+constructs>=10.0.0,<11.0.0
+aws-cdk.aws_apigatewayv2
+# aws-cdk.aws-apigatewayv2-integrations
+aws-cdk.aws-lambda
+aws-cdk.core
+aws-cdk.aws_apigatewayv2_integrations_alpha
+aws-cdk.aws_lambda_python_alpha

@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block title %}NJTransit TrainWatcher v1.0{% endblock %}
+{% block head %}
+  {{ super() }}
+  <title>NJTransit TrainWatcher 1.0</title>
+{% endblock %}
+{% block content %}
+
+<div class="row align-items-center">
+  <div class="container-fluid text-responsive text-muted ">
+    <div class="row row-cols-3">
+      <div class="col-12 text-center">
+        {{ station_name }}
+      </div>
+    </div>
+  </div>
+</div>
+
+
+  {% for arrival in arrivals %}
+    <div class="row align-items-center">
+
+        {% if arrival.occupancy == "LIGHT" %}
+        <div class="container-fluid text-responsive text-success">
+          {% elif  arrival.occupancy == "MEDIUM"  %}
+            <div class="container-fluid text-responsive  text-warning">
+          {% elif  arrival.occupancy == "HEAVY"  %}
+            <div class="container-fluid text-responsive  text-danger">
+          {% else  %}
+          <div class="container-fluid text-responsive  text-muted ">
+        {% endif %}
+        
+        <div class="row row-cols-3">
+          <div class="col-3 text-center">{{ arrival.train_no }}</div>
+          <div class="col-5">{{ arrival.destination }} </div>
+          <div class="col-4">{% autoescape false %} {{ arrival.eta }} min {% endautoescape %}</div>
+        </div> 
+      </div>
+    </div>
+  {% endfor %}
+
+{% endblock %}

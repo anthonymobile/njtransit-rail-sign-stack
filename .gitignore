@@ -15,5 +15,5 @@ secrets.json
 # OSX stuff
 .DS_Store
 
-# migrations
-__incoming
+# # migrations
+# __incoming

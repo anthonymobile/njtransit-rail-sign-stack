@@ -1,0 +1,4 @@
+.text-responsive {
+    font-size: calc(100% + 3.75vw + 3.75vh);
+    line-height: 1;
+  }

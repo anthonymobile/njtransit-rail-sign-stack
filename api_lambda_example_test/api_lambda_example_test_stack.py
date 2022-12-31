@@ -7,6 +7,7 @@ from aws_cdk import (
     aws_lambda as _lambda
 
 )
+
 from constructs import Construct
 
 class ApiLambdaExampleTestStack(Stack):
@@ -21,7 +22,7 @@ class ApiLambdaExampleTestStack(Stack):
             entry="./lambda1",
             index="hello_world.py",
             handler="lambda_handler",
-            runtime=_lambda.Runtime.PYTHON_3_9
+            runtime=_lambda.Runtime.PYTHON_3_8
             )
 
         # defines an API Gateway Http API resource backed by our "efs_lambda" function.
