@@ -35,3 +35,47 @@ class NJTransitRailSignService(Stack):
                 )
 
         CfnOutput(self, 'HTTP API Url', value=my_api.url);
+
+
+        '''
+        ############### IMPORTED
+
+        # create api and domain mapping
+        # per https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_apigatewayv2_alpha/README.html#custom-domain
+
+        # get the hosted zone
+        hosted_zone = route53.HostedZone.from_lookup(
+            self,
+            "HostedZone",
+            domain_name=cfg.domain
+            )
+        
+        # create certificate
+        certificate = acm.DnsValidatedCertificate(
+            self,
+            "NJTSignRail_LambdaHandler_Certificate",
+            domain_name=f"{cfg.subdomain}.{cfg.domain}",
+            hosted_zone=hosted_zone,
+            region="us-east-1"
+            )
+        
+        # create API DomainName
+        dn = apigwv2.DomainName(
+            self, 
+            "DN",
+            domain_name=f"{cfg.subdomain}.{cfg.domain}",
+            certificate=certificate
+        )
+
+        # create API gateway
+        api = apigwv2.HttpApi(self, "HttpProxyProdApi",
+            default_integration=integrations.HttpLambdaIntegration("DefaultIntegration", njtsign_rail_lambda),
+            # https://${dn.domainName}/foo goes to prodApi $default stage
+            default_domain_mapping=apigwv2.DomainMappingOptions(
+                domain_name=dn,
+                mapping_key="foo"
+            )
+        )
+
+
+        '''
