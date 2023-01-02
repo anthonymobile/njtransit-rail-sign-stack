@@ -1,6 +1,7 @@
 requests
 flask
-flask-lambda
+# flask-lambda
+serverless-wsgi
 bootstrap-flask
 jinja2
 requests

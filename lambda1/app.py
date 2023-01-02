@@ -1,20 +1,25 @@
 import logging
 import json
 
-from flask import request, render_template
-from flask_lambda import FlaskLambda
+from flask import Flask, request, render_template
 from flask_bootstrap import Bootstrap4
+
+import serverless_wsgi
 
 from Station import Station
 import config as cfg
 
-# flask
-app = FlaskLambda(__name__)
-bootstrap = Bootstrap4(app)
-
+#### INIT ###############################################################################
 # logging
 logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
+
+# flask
+app = Flask(__name__)
+bootstrap = Bootstrap4(app)
+
+
+#### FLASK ###############################################################################
 
 # url handler
 @app.route('/')
@@ -49,64 +54,13 @@ def message_fix(message):
     else:
         return message.lower()
 
-#################################
-# We only need this for local development.
-#################################
+#### WRAPPER ###############################################################################
+# lambda handler (maps requests via serverless-wsgi)
+def handler(event, context):
+    return serverless_wsgi.handle_request(app, event, context)
+
+#### MAIN ###############################################################################
+# We only need this for local execution.
 
 if __name__ == '__main__':
     app.run()
-
-
-
-'''
-############# OLD EXAMPLE LAMBDA FUNCTION
-def lambda_handler(event, context):
-    logger = logging.getLogger()
-    logger.setLevel(logging.DEBUG)
-
-    """Sample pure Lambda function
-
-    Parameters
-    ----------
-    event: dict, required
-        API Gateway Lambda Proxy Input Format
-
-        Event doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html#api-gateway-simple-proxy-for-lambda-input-format
-
-    context: object, required
-        Lambda Context runtime methods and attributes
-
-        Context doc: https://docs.aws.amazon.com/lambda/latest/dg/python-context-object.html
-
-    Returns
-    ------
-    API Gateway Lambda Proxy Output Format: dict
-
-        Return doc: https://docs.aws.amazon.com/apigateway/latest/developerguide/set-up-lambda-proxy-integrations.html
-    """
-    logger.debug(f"NJTransitRailSignFunction Event: {event}")
-
-    try:
-        ip = requests.get("http://checkip.amazonaws.com/")
-    except requests.RequestException as e:
-        # Send some context about this error to Lambda Logs
-        print(e)
-
-        raise e
-
-    # test that we can call a function from another python file
-    s = get_util_string()
-
-    logger.info("Goodbye World....")
-
-    return {
-        "statusCode": 200,
-        "body": json.dumps({
-            "message": "NJTransit Sign Is Alive!",
-            "location": ip.text.replace("\n", ""),
-            "util_string": s
-        }),
-    }
-
-
-'''
