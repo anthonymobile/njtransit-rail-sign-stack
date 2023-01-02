@@ -1,7 +1,7 @@
 import logging
 import json
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, url_for
 from flask_bootstrap import Bootstrap4
 
 import serverless_wsgi
@@ -15,9 +15,11 @@ logger = logging.getLogger()
 logger.setLevel(logging.DEBUG)
 
 # flask
-app = Flask(__name__)
+app = Flask(
+    __name__,
+    static_folder="css", 
+    static_url_path="/css")
 bootstrap = Bootstrap4(app)
-
 
 #### FLASK ###############################################################################
 

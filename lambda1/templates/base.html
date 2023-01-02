@@ -6,11 +6,18 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
         <meta http-equiv="refresh" content={{cfg.refresh_rate}} >
+
+        <!--TODO: this renders as /$default/css/favicon.ico when running in Lambda. hard-code works but would be good to fix it -->
+        <!-- <link rel="shortcut icon" href="{{url_for('static', filename='favicon.ico')}}"> -->
+        <link rel="shortcut icon" type="image/x-icon" href="css/favicon.ico">
+
         {% block styles %}
             <!-- Bootstrap CSS -->
             {{ bootstrap.load_css() }}
 
-            <link rel="stylesheet" href="{{url_for('.static', filename='mystyle.css')}}">
+            <!--TODO: this renders as /$default/css/mystyle.css when running in Lambda. hard-code works but would be good to fix it -->
+            <!-- <link rel="stylesheet" href="{{url_for('static', filename='mystyle.css')}}"> -->
+            <link rel="stylesheet" href="css/mystyle.css">
 
         {% endblock %}
 
