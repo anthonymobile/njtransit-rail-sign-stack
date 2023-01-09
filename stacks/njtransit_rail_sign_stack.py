@@ -1,5 +1,6 @@
 from aws_cdk import (
     Stack,
+    Duration,
     aws_apigatewayv2_alpha as api_gw,
     aws_apigatewayv2_integrations_alpha as integrations,
     CfnOutput,
@@ -20,8 +21,8 @@ class NJTransitRailSignService(Stack):
             "flask_app_function",
             entry="./lambda1",
             index="app.py",
-            # handler="lambda_handler", #FIXME: [ERROR] Runtime.HandlerNotFound: Handler 'lambda_handler' missing on module 'app'
             handler="handler",
+            timeout=Duration.seconds(60) ,
             runtime=_lambda.Runtime.PYTHON_3_8
             )
 
