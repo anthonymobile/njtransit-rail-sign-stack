@@ -22,4 +22,3 @@ NJTransitRailSignService(
     )
 
 app.synth()
-g

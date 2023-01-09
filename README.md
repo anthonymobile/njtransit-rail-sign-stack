@@ -1,8 +1,8 @@
 # NJTransit Rail Arrivals Board
 
-- url like http://endpoint/?station_name=Hoboken Terminal
+- test endpoint is 
 - query argument is `station_name={station name}`, and need to use full name as per https://www.njtransit.com/dv-to/
-
+- e.g. https://1zi7g0kpae.execute-api.us-east-1.amazonaws.com/?station_name=Hawthorne%20Station
 
 # default CDK docs below
 
