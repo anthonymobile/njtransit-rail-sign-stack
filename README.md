@@ -1,13 +1,10 @@
-# TODO incremental build of rail project
+# NJTransit Rail Arrivals Board
 
-1. deploy example project (and test that dependencies work)
-2. move whole project into ../njtransit-rail-sign-stack/
-3. test deploy again
-4. create repo and push
-5. update names/symbols and deploy again (as a new stack)
-6. migrate my code in from ../_incoming_
-7. update function code for flask_lambda, get working before moving on
-8. add custom domain / certificate
+- url like http://endpoint/?station_name=Hoboken Terminal
+- query argument is `station_name={station name}`, and need to use full name as per https://www.njtransit.com/dv-to/
+
+
+# default CDK docs below
 
 ## deploy
 

@@ -5,11 +5,19 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Python: Current File",
+            "type": "python",
+            "request": "launch",
+            "program": "${file}",
+            "console": "integratedTerminal",
+            "justMyCode": true
+        },
+        {
             "name": "Flask Lambda",
             "type": "python",
             "request": "launch",
             "module": "app",
-            "cwd" : "/Users/anthonytownsend/Dropbox/Desktop/code/chilltown_labs/njtransit-rail-sign-stack/lambda1/",
+            "cwd": "/Users/anthonytownsend/Dropbox/Desktop/code/chilltown_labs/njtransit-rail-sign-stack/lambda1/",
             "env": {
                 "FLASK_APP": "app.py",
                 "FLASK_DEBUG": "1"

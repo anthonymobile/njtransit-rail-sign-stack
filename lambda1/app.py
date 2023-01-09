@@ -30,16 +30,16 @@ def index():
     logger.debug(f"NJTransitRailSignFunction args: {request.args}" )
     logger.info("Information log message....")
 
-    station_code = request.args.get('station_code')
-    if station_code is None:
-        return("ERROR: No station code provided.")
+    station_name = request.args.get('station_name')
+    if station_name is None:
+        return("ERROR: No station name provided.")
     else:
-        station = Station(station_code)
+        station = Station(station_name)
         return render_template(
             'index.html',
             cfg=cfg,
-            station_name=station.station_name,
-            arrivals=station.arrivals
+            station_name=station_name,
+            arrivals=station.departurevision_arrivals
         )
 
 # filter. insert a newline into the headsign.
