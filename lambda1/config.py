@@ -8,22 +8,14 @@ LEVEL = 'DEBUG'
 MAX_BYTES = 50*1024
 MAX_BACKUP_COUNT = 3
 
-# home many arivals per route to show
-num_arrivals_per_route=3
+# home many arivals to show
+num_arrivals=10
 
 # how long ETA is before display is suppressed
 cutoff = 90
 
 # refresh rate in seconds
-refresh_rate = 20
-
-# # station name lookup
-# station_names = {
-#     "HB" : {"station_name" : "HOBOKEN TERMINAL"},
-#     "NY" : {"station_name" : "NEW YORK PENN"},
-#     "MB" : {"station_name" : "MILLBURN"},
-
-# }
+refresh_rate = 60
 
 # # lookup dict of headsign (fd) and replacement text
 # headsign_replacements = {

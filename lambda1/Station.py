@@ -27,6 +27,10 @@ class Station:
         raw_rows = tree.xpath("//div[@class='media no-gutters p-3']")
         parsed_rows=[str(row.xpath("string()")) for row in raw_rows]
         split_rows = [row.split('\n') for row in parsed_rows]
+
+        # truncate list
+        split_rows = split_rows[:cfg.num_arrivals]
+
         stripped_rows = []
         for row in split_rows:
             stripped_row = []
