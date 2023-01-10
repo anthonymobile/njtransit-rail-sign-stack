@@ -1,6 +1,6 @@
 # domain / subdomain
 domain = "crowdr.org"
-subdomain = "njtsign-rail"
+subdomain = "mydeparturevision"
 
 # logging settings
 LOG_FILE = 'app.log'

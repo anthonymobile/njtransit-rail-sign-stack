@@ -2,6 +2,27 @@ import config as cfg
 import requests
 from lxml import html
 
+class Arrival:
+
+    def __init__(self, row):
+        self.parsed_content = str(row.xpath("string()")).split('\n') #TODO: split this up differently?
+        self.train_no = self.parsed_content[1].strip().split(' ')[1]
+        self.destination = self.parse_destination()
+        self.eta = self.parsed_content[5].strip().lower()
+
+    def parse_destination(self):
+        destination = self.parsed_content[0].strip()
+        if len(destination.split('-')) > 1:
+            destination = destination.split('-')[0]
+        # bug this 
+        if destination[-5:] == (" MAIN" or " SEC"):
+            return ' '.join(destination.split(' ')[:-1])
+            # if len (destination.split(' ')) == 2:
+            #     return destination.split(' ')[0]
+            # if len (destination.split(' ')) == 2:
+            #     return destination.split(' ')[0]
+        return destination
+
 class Station:
 
     def __init__(self, station_name):
@@ -20,32 +41,26 @@ class Station:
         return response.content
 
     def parse_departurevision_html(self):
-          
-        tree = html.fromstring(self.departurevision_html)
-        
+
         # parse arrival boxes using XPath
-        raw_rows = tree.xpath("//div[@class='media no-gutters p-3']")
-        parsed_rows=[str(row.xpath("string()")) for row in raw_rows]
-        split_rows = [row.split('\n') for row in parsed_rows]
+        arrival_blocks = html.fromstring(self.departurevision_html).xpath("//div[@class='media no-gutters p-3']")
+        rows = [Arrival(r) for r in arrival_blocks][:cfg.num_arrivals]
 
-        # truncate list
-        split_rows = split_rows[:cfg.num_arrivals]
+        # stripped_rows = []
+        # for row in split_rows:
+        #     stripped_row = []
+        #     for word in row:
+        #         stripped_row.append(word.strip())
+        #     stripped_rows.append([i for i in stripped_row if i])
+        # dict_rows = {}
+        # for row in rows:
+        #     dict_rows[row[1].split(' ')[1]]={
+        #         'destination': row[0].split('-')[0],
+        #         'eta': row[3].lower(),
+        #         'track': row[4].split(' ')[1]
+        #     }
 
-        stripped_rows = []
-        for row in split_rows:
-            stripped_row = []
-            for word in row:
-                stripped_row.append(word.strip())
-            stripped_rows.append([i for i in stripped_row if i])
-        dict_rows = {}
-        for row in stripped_rows:
-            dict_rows[row[1].split(' ')[1]]={
-                'destination': row[0].split('-')[0],
-                'eta': row[3].lower(),
-                'track': row[4].split(' ')[1]
-            }
-
-        return dict_rows
+        return rows
 
 # testing
 if __name__ == "__main__":

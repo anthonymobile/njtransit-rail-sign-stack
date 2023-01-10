@@ -16,13 +16,13 @@
   </div>
 </div>
 
-  {% for train_num, arrival_data in arrivals.items() %}
+  {% for arrival in arrivals %}
   <div class="row align-items-center">
     <div class="container-fluid text-responsive">  
       <div class="row row-cols-3">
-        <div class="col-3 text-right text-muted">{{ train_num }}</div>
-        <div class="col-5 text-muted text-info">{{ arrival_data.destination }} </div>
-        <div class="col-4 text-danger">{% autoescape false %} {{ arrival_data.eta }}{% endautoescape %}</div>
+        <div class="col-3 text-right text-muted">{{ arrival.train_no }}</div>
+        <div class="col-5 text-muted text-info">{{ arrival.destination }} </div>
+        <div class="col-4 text-danger">{% autoescape false %} {{ arrival.eta }}{% endautoescape %}</div>
       </div> 
     </div>
   </div>
