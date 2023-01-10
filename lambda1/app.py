@@ -31,10 +31,15 @@ def index():
     logger.info("Information log message....")
 
     station_name = request.args.get('station_name')
+    try:
+        num_arrivals = request.args.get('num_arrivals')
+    except:
+        num_arrivals=cfg.num_arrivals
+
     if station_name is None:
         return("ERROR: No station name provided.")
     else:
-        station = Station(station_name)
+        station = Station(station_name, num_arrivals)
         return render_template(
             'index.html',
             cfg=cfg,

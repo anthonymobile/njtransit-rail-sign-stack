@@ -1,10 +1,29 @@
 # NJTransit Rail Arrivals Board
 
-- test endpoint is 
-- query argument is `station_name={station name}`, and need to use full name as per https://www.njtransit.com/dv-to/
-- e.g. https://1zi7g0kpae.execute-api.us-east-1.amazonaws.com/?station_name=Hawthorne%20Station
+This is a combination web scraper and service that provides a simple HTML arrivals board for any NJTransit rail station served by the [NJTransit Departure Vision](https://www.njtransit.com/dv-to/) website.
 
-# default CDK docs below
+## Examples
+- Hoboken Terminal, 10 lines
+- Hoboken Terminal, 5 lines
+- Hawthorne Station, 10 lines
+
+## Endpoint
+
+- Development endpoint  ttps://1zi7g0kpae.execute-api.us-east-1.amazonaws.com/
+- Production endpoint (FUTURE) https://mydeparturevision.crowdr.org
+
+
+## Query Arguments
+
+- Required
+    - `station_name` - Use full name as required on [NJTransit Departure Vision](https://www.njtransit.com/dv-to/) website.
+    - e.g. `
+
+- Optional
+    - `num_arrivals` - Number of upcoming arrivals to display.
+
+
+# CDK Documentation
 
 ## deploy
 
