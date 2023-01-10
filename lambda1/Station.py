@@ -14,9 +14,12 @@ class Arrival:
         destination = self.parsed_content[0].strip()
         if len(destination.split('-')) > 1:
             destination = destination.split('-')[0]
-        # bug this 
-        if destination[-5:] == (" MAIN" or " SEC"):
-            return ' '.join(destination.split(' ')[:-1])
+
+        suffixes = ["MAIN"," SEC","MOBO"," M&E"]
+
+        if destination[-4:] in suffixes:
+            d = ' '.join(destination.split(' ')[:-1])
+            return d
             # if len (destination.split(' ')) == 2:
             #     return destination.split(' ')[0]
             # if len (destination.split(' ')) == 2:
