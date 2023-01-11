@@ -5,7 +5,7 @@ from lxml import html
 class Arrival:
 
     def __init__(self, row):
-        self.parsed_content = str(row.xpath("string()")).split('\n') #TODO: split this up differently?
+        self.parsed_content = str(row.xpath("string()")).split('\n')
         self.train_no = self.parsed_content[1].strip().split(' ')[1]
         self.destination = self.parse_destination()
         self.eta = self.parse_eta()

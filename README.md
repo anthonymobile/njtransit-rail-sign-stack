@@ -8,8 +8,7 @@ This is a combination web scraper and service that provides a simple HTML arriva
 - Hawthorne Station, 10 lines
 
 ## Endpoint
-
-- Development endpoint  ttps://1zi7g0kpae.execute-api.us-east-1.amazonaws.com/
+- Development endpoint [https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/](https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/)
 - Production endpoint (FUTURE) https://mydeparturevision.crowdr.org
 
 
@@ -17,10 +16,11 @@ This is a combination web scraper and service that provides a simple HTML arriva
 
 - Required
     - `station_name` - Use full name as required on [NJTransit Departure Vision](https://www.njtransit.com/dv-to/) website.
-    - e.g. `
+        - e.g. `https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/?station_name=Hoboken%20Terminal`
 
 - Optional
-    - `num_arrivals` - Number of upcoming arrivals to display.
+    - `num_arrivals` - Number of upcoming arrivals to display. (default is specified in `lambda1/config.py`)
+        - e.g. `https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/?station_name=Hoboken%20Terminal&num_arrivals=5`
 
 
 # CDK Documentation
