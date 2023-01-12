@@ -21,6 +21,7 @@ This is a combination web scraper and service that provides a simple HTML arriva
 - Optional
     - `num_arrivals` - Number of upcoming arrivals to display. (default is specified in `lambda1/config.py`)
         - e.g. `https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/?station_name=Hoboken%20Terminal&num_arrivals=5`
+    - `font_size` - vw/vh units for CSS styling. 1 is small, 3 (default) is medium, 5 is large.
 
 
 # CDK Documentation

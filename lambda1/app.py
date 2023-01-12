@@ -31,10 +31,16 @@ def index():
     logger.info("Information log message....")
 
     station_name = request.args.get('station_name')
-    try:
+    if request.args.get('num_arrivals') != None:
         num_arrivals = request.args.get('num_arrivals')
-    except:
+    else:
         num_arrivals=cfg.num_arrivals
+    
+    if request.args.get('font_size') != None:
+        font_size = request.args.get('font_size')
+    else:
+        font_size=cfg.font_size
+    inline_style=f"<style>.text-responsive {{font-size: calc(100% + {font_size}vw + {font_size}vh);line-height: 1;}}</style>"
 
     if station_name is None:
         return("ERROR: No station name provided.")
@@ -42,8 +48,10 @@ def index():
         station = Station(station_name, num_arrivals)
         return render_template(
             'index.html',
+            inline_style=inline_style,
             cfg=cfg,
             station_name=station_name,
+            font_size= font_size,
             arrivals=station.departurevision_arrivals
         )
 

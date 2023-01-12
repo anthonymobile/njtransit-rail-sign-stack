@@ -11,6 +11,9 @@ MAX_BACKUP_COUNT = 3
 # home many arivals to show
 num_arrivals=10
 
+# default font size
+font_size = 3
+
 # how long ETA is before display is suppressed
 cutoff = 90
 
