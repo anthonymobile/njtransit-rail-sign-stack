@@ -3,12 +3,10 @@
 from aws_cdk import (
     Stack,
     Duration,
-    # aws_apigatewayv2_alpha as api_gw,
-    # aws_apigatewayv2_integrations_alpha as integrations,
     aws_apigateway as apigateway,
     CfnOutput,
     aws_lambda_python_alpha as lambda_alpha_,
-    # aws_lambda as _lambda,
+    aws_lambda as _lambda,
     aws_certificatemanager as acm,
     aws_route53 as route53,
     aws_route53_targets as targets
@@ -34,26 +32,8 @@ class NJTransitRailSignService(Stack):
             runtime=_lambda.Runtime.PYTHON_3_8
             )
 
-
         ################################################################################
-        # COMMENT OUT UNUSED OPTIONS BELOW
-        ################################################################################
-
-        ################################################################################
-        # OPTION A — Http Gateway, No Domain
-        ################################################################################
-
-        my_api = api_gw.HttpApi(
-            self,
-            'NJTRailSign_HttpAPI',
-             default_integration=integrations.HttpLambdaIntegration(
-                id="lambda1-lambda-proxy",
-                handler=my_handler
-                )
-                )
-
-        ################################################################################
-        # OPTION B — REST API, Custom Domain
+        # REST API, Custom Domain
         # following https://cloudbytes.dev/aws-academy/cdk-api-gateway-with-custom-domain
         ################################################################################
 
