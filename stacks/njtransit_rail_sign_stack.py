@@ -1,14 +1,22 @@
+#TODO: comment out ones that dont need in final
+
 from aws_cdk import (
     Stack,
     Duration,
-    aws_apigatewayv2_alpha as api_gw,
-    aws_apigatewayv2_integrations_alpha as integrations,
+    # aws_apigatewayv2_alpha as api_gw,
+    # aws_apigatewayv2_integrations_alpha as integrations,
+    aws_apigateway as apigateway,
     CfnOutput,
     aws_lambda_python_alpha as lambda_alpha_,
-    aws_lambda as _lambda
+    # aws_lambda as _lambda,
+    aws_certificatemanager as acm,
+    aws_route53 as route53,
+    aws_route53_targets as targets
 )
 
 from constructs import Construct
+
+import lambda1.config as cfg
 
 class NJTransitRailSignService(Stack):
 
@@ -18,7 +26,7 @@ class NJTransitRailSignService(Stack):
         # The code that defines your stack goes here
         my_handler = lambda_alpha_.PythonFunction(
             self, 
-            "flask_app_function",
+            "NJTRailSign_Lambda",
             entry="./lambda1",
             index="app.py",
             handler="handler",
@@ -26,58 +34,71 @@ class NJTransitRailSignService(Stack):
             runtime=_lambda.Runtime.PYTHON_3_8
             )
 
-        # defines an API Gateway Http API resource backed by our "efs_lambda" function.
+
+        ################################################################################
+        # COMMENT OUT UNUSED OPTIONS BELOW
+        ################################################################################
+
+        ################################################################################
+        # OPTION A — Http Gateway, No Domain
+        ################################################################################
+
         my_api = api_gw.HttpApi(
             self,
-            'NJTRailSign API Lambda',
+            'NJTRailSign_HttpAPI',
              default_integration=integrations.HttpLambdaIntegration(
                 id="lambda1-lambda-proxy",
                 handler=my_handler
                 )
                 )
 
-        CfnOutput(self, 'HTTP API Url', value=my_api.url);
-
-
-        '''
-        ############### IMPORTED
-
-        # create api and domain mapping
-        # per https://docs.aws.amazon.com/cdk/api/v2/python/aws_cdk.aws_apigatewayv2_alpha/README.html#custom-domain
+        ################################################################################
+        # OPTION B — REST API, Custom Domain
+        # following https://cloudbytes.dev/aws-academy/cdk-api-gateway-with-custom-domain
+        ################################################################################
 
         # get the hosted zone
-        hosted_zone = route53.HostedZone.from_lookup(
+        my_hosted_zone = route53.HostedZone.from_lookup(
             self,
-            "HostedZone",
+            "NJTSignRail_HostedZone",
             domain_name=cfg.domain
             )
-        
+
         # create certificate
-        certificate = acm.DnsValidatedCertificate(
+        my_certificate = acm.DnsValidatedCertificate(
             self,
-            "NJTSignRail_LambdaHandler_Certificate",
+            "NJTSignRail_Certificate",
             domain_name=f"{cfg.subdomain}.{cfg.domain}",
-            hosted_zone=hosted_zone,
+            hosted_zone=my_hosted_zone,
             region="us-east-1"
             )
-        
-        # create API DomainName
-        dn = apigwv2.DomainName(
-            self, 
-            "DN",
-            domain_name=f"{cfg.subdomain}.{cfg.domain}",
-            certificate=certificate
-        )
 
-        # create API gateway
-        api = apigwv2.HttpApi(self, "HttpProxyProdApi",
-            default_integration=integrations.HttpLambdaIntegration("DefaultIntegration", njtsign_rail_lambda),
-            # https://${dn.domainName}/foo goes to prodApi $default stage
-            default_domain_mapping=apigwv2.DomainMappingOptions(
-                domain_name=dn,
-                mapping_key="foo"
+        # create REST API
+        my_api = apigateway.LambdaRestApi(
+            self,
+            "NJTSignRail_ApiGateway",
+            handler=my_handler,
+            domain_name=apigateway.DomainNameOptions(
+                domain_name=f"{cfg.subdomain}.{cfg.domain}",
+                certificate=my_certificate,
+                security_policy=apigateway.SecurityPolicy.TLS_1_2,
+                endpoint_type=apigateway.EndpointType.EDGE,
             )
         )
 
+        # create A record
+        route53.ARecord(
+            self,
+            "NJTSignRail_ApiRecord",
+            record_name=cfg.subdomain,
+            zone=my_hosted_zone,
+            target=route53.RecordTarget.from_alias(targets.ApiGateway(my_api)),
+        )
 
-        '''
+
+        ################################################################################
+        # OUTPUTS
+        ################################################################################
+
+        CfnOutput(self, 'Hosted Zone', value=my_hosted_zone.zone_name);
+        CfnOutput(self, 'API Url', value=my_api.url);

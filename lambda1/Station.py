@@ -15,15 +15,12 @@ class Arrival:
         if len(destination.split('-')) > 1:
             destination = destination.split('-')[0]
 
-        suffixes = ["MAIN"," SEC", "-SEC", "MOBO"," M&E"]
+        suffixes = ["MAIN"," SEC", "-SEC", "MOBO"," M&E", "RARV"]
 
         if destination[-4:] in suffixes:
             d = ' '.join(destination.split(' ')[:-1])
             return d
-            # if len (destination.split(' ')) == 2:
-            #     return destination.split(' ')[0]
-            # if len (destination.split(' ')) == 2:
-            #     return destination.split(' ')[0]
+
         return destination
 
     def parse_eta(self):
@@ -57,20 +54,6 @@ class Station:
         # parse arrival boxes using XPath
         arrival_blocks = html.fromstring(self.departurevision_html).xpath("//div[@class='media no-gutters p-3']")
         rows = [Arrival(r) for r in arrival_blocks][:self.num_arrivals]
-
-        # stripped_rows = []
-        # for row in split_rows:
-        #     stripped_row = []
-        #     for word in row:
-        #         stripped_row.append(word.strip())
-        #     stripped_rows.append([i for i in stripped_row if i])
-        # dict_rows = {}
-        # for row in rows:
-        #     dict_rows[row[1].split(' ')[1]]={
-        #         'destination': row[0].split('-')[0],
-        #         'eta': row[3].lower(),
-        #         'track': row[4].split(' ')[1]
-        #     }
 
         return rows
 

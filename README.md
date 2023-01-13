@@ -3,9 +3,9 @@
 This is a combination web scraper and service that provides a simple HTML arrivals board for any NJTransit rail station served by the [NJTransit Departure Vision](https://www.njtransit.com/dv-to/) website.
 
 ## Examples
-- Hoboken Terminal, 10 lines
-- Hoboken Terminal, 5 lines
-- Hawthorne Station, 10 lines
+- [Hoboken Terminal, 5 arrivals, big text](https://mydeparturevision.crowdr.org/?station_name=Hoboken%20Terminal&font_size=4&num_arrivals=5)
+- [Hoboken Terminal, 10 lines, medium text](https://mydeparturevision.crowdr.org/?station_name=Hoboken%20Terminal&font_size=3&num_arrivals=10)
+- [Hoboken Terminal, 20 lines, small text](https://mydeparturevision.crowdr.org/?station_name=Hoboken%20Terminal&font_size=2&num_arrivals=20)
 
 ## Endpoint
 - Development endpoint [https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/](https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/)
@@ -17,6 +17,7 @@ This is a combination web scraper and service that provides a simple HTML arriva
 - Required
     - `station_name` - Use full name as required on [NJTransit Departure Vision](https://www.njtransit.com/dv-to/) website.
         - e.g. `https://rl2gcitpe7.execute-api.us-east-1.amazonaws.com/?station_name=Hoboken%20Terminal`
+        - or https://mydeparturevision.crowdr.org/?station_name=Hoboken%20Terminal
 
 - Optional
     - `num_arrivals` - Number of upcoming arrivals to display. (default is specified in `lambda1/config.py`)
